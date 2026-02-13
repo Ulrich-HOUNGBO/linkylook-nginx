@@ -1,0 +1,20 @@
+# nginx-linkylook/docker-compose.yml
+services:
+  nginx-linkylook:
+    image: nginx:alpine
+    container_name: nginx-linkylook
+    restart: unless-stopped
+    volumes:
+      - ./linkylook.conf:/etc/nginx/conf.d/linkylook.conf:ro
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linkylook.rule=Host(`linkylook.com`) || Host(`www.linkylook.com`)"
+      - "traefik.http.routers.linkylook.entrypoints=websecure"
+      - "traefik.http.routers.linkylook.tls.certresolver=letsencrypt"
+      - "traefik.http.services.linkylook.loadbalancer.server.port=80"
+
+networks:
+  dokploy-network:
+    external: true
