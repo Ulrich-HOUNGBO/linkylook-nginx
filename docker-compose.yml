@@ -2,7 +2,7 @@
 services:
   nginx-linkylook:
     image: nginx:alpine
-    container_name: nginx-linkylook
+    container_name: linkylook-nginx
     restart: unless-stopped
     volumes:
       - ./linkylook.conf:/etc/nginx/conf.d/linkylook.conf:ro
